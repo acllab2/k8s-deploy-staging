@@ -31,6 +31,24 @@ pipeline {
         }
       }
     }
+    stage('DT Deploy Event') {
+      steps {
+        createDynatraceDeploymentEvent(
+        envId: 'Dynatrace Tenant',
+        tagMatchRules: [
+        [
+          meTypes: [
+            [meType: 'SERVICE']
+          ],
+          tags: [
+            [context: 'CONTEXTLESS', key: 'app', value: "${env.APP_NAME}"],
+            [context: 'CONTEXTLESS', key: 'environment', value: 'staging']
+          ]
+        ]
+        ]) {
+        }
+      }
+    }
     /*
     stage('DT Deploy Event') {
       steps {
